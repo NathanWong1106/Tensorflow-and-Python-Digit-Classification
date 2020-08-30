@@ -1,5 +1,4 @@
 import tensorflow as tf
-import numpy as np
 import cv2
 import sys
 import os
@@ -18,7 +17,7 @@ def main():
     if os.path.isfile(path):
         prediction = classification(path, model)
         if prediction is not None:
-            print(f'The predictor thinks that the image at {path} is the number {classification}')
+            print(f'The predictor thinks that the image at {path} is the number {prediction}')
 
     # search through entire directory
     elif os.path.isdir(path):
