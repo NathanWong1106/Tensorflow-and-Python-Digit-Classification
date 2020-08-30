@@ -1,5 +1,4 @@
 import sys
-import cv2
 import numpy as np
 import tensorflow as tf
 
@@ -8,19 +7,6 @@ DIGITS = 10 # 0-9
 EPOCHS = 10
 
 (imageTrain, labelTrain), (imageTest, labelTest) = tf.keras.datasets.mnist.load_data()
-
-for img, label in zip(imageTrain, labelTrain):
-    if label == 6:
-        cv2.imshow('6', img)
-        cv2.waitKey(0)
-
-# for img, label in zip(imageTrain.copy(), labelTrain.copy()):
-#     np.append(imageTrain, [cv2.bitwise_not(img)])
-#     np.append(labelTrain, [label])
-
-# for img, label in zip(imageTest.copy(), labelTest.copy()):
-#     np.append(imageTest, [cv2.bitwise_not(img)])
-#     np.append(labelTest, [label])
 
 # normlalize to values from 0 through 1
 imageTrain, imageTest = imageTrain / 255.0, imageTest / 255.0
