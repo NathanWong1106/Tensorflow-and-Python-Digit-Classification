@@ -3,6 +3,8 @@ import cv2
 import sys
 import os
 
+# images/sevens/7_2.jpg will be incorrectly categorized as 2
+
 SIZE = 28
 
 def main():
@@ -22,13 +24,8 @@ def main():
     # search through entire directory
     elif os.path.isdir(path):
         print(f'---------------SEARCHING THROUGH {path}------------------\n')
-        print("PATH\tPREDICTION")
-        for img in os.listdir(path):
-            imgPath = os.path.join(path, img)
-            if os.path.isfile(imgPath) and (imgPath.endswith('.jpg') or imgPath.endswith('.png')):
-                prediction = classification(imgPath, model) 
-                if prediction is not None:
-                    print(f'{img}\t{prediction}')
+        print("FILE NAME\tPREDICTION")
+        searchdir(path, model)
 
 def classification(path, model):
         # prepare image for prediction
@@ -43,4 +40,13 @@ def classification(path, model):
         classification = model.predict([img]).argmax()
         return classification
 
+def searchdir(path, model):
+    for img in os.listdir(path):
+        imgPath = os.path.join(path, img)
+        if os.path.isfile(imgPath) and (imgPath.endswith('.jpg') or imgPath.endswith('.png')):
+            prediction = classification(imgPath, model) 
+            if prediction is not None:
+                print(f'{img}\t\t{prediction}')
+        elif os.path.isdir(imgPath):
+            searchdir(imgPath, model)
 main()

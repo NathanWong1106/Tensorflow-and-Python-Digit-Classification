@@ -23,11 +23,22 @@ model = tf.keras.models.Sequential([
     tf.keras.layers.Conv2D(32, (3,3), activation="relu", input_shape=(rows, cols, 1)),
     # Max Pooling: reduces size by selecting max value in a 2x2 pooling size
     tf.keras.layers.MaxPooling2D(pool_size=(2,2)),
+    
+    tf.keras.layers.Conv2D(64, (3,3), activation="relu"),
+    tf.keras.layers.MaxPooling2D(pool_size=(2,2)),
+
+    tf.keras.layers.Conv2D(64, (3,3), activation="relu"),
+    tf.keras.layers.MaxPooling2D(pool_size=(2,2)),
+
     #flatten to connect layers
     tf.keras.layers.Flatten(),
 
+    # input layer
     tf.keras.layers.Dense(128, activation="relu"),
-    tf.keras.layers.Dropout(0.5),
+
+    # hidden layers
+    tf.keras.layers.Dense(64, activation="relu"),
+    tf.keras.layers.Dropout(0.3),
 
     # softmax activation returns probabilities of results
     tf.keras.layers.Dense(DIGITS, activation="softmax")
