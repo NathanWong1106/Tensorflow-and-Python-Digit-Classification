@@ -13,9 +13,13 @@ imageTrain, imageTest = imageTrain / 255.0, imageTest / 255.0
 labelTrain = tf.keras.utils.to_categorical(labelTrain)
 labelTest = tf.keras.utils.to_categorical(labelTest)
 
+print(imageTrain[0].shape)
+
 # flatten image to 1D vector / 1D array of length 28*28
 imageTrain = imageTrain.reshape(imageTrain.shape[0], rows, cols, 1)
 imageTest = imageTest.reshape(imageTest.shape[0], rows, cols, 1)
+
+print(imageTrain[0].shape)
 
 # make and compile the model
 model = tf.keras.models.Sequential([
@@ -30,15 +34,19 @@ model = tf.keras.models.Sequential([
     tf.keras.layers.Conv2D(64, (3,3), activation="relu"),
     tf.keras.layers.MaxPooling2D(pool_size=(2,2)),
 
+    # This and other dropouts are used to combat overfitting
+    tf.keras.layers.Dropout(0.2),
+
     #flatten to connect layers
     tf.keras.layers.Flatten(),
 
     # input layer
     tf.keras.layers.Dense(128, activation="relu"),
+    tf.keras.layers.Dropout(0.5),
 
     # hidden layers
     tf.keras.layers.Dense(64, activation="relu"),
-    tf.keras.layers.Dropout(0.3),
+    tf.keras.layers.Dropout(0.5),
 
     # softmax activation returns probabilities of results
     tf.keras.layers.Dense(DIGITS, activation="softmax")

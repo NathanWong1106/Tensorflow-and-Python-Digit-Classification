@@ -2,9 +2,6 @@ import tensorflow as tf
 import cv2
 import sys
 import os
-
-# images/sevens/7_2.jpg will be incorrectly categorized as 2
-
 SIZE = 28
 
 def main():
@@ -33,7 +30,9 @@ def classification(path, model):
         img = cv2.resize(img, (SIZE, SIZE))
         #invert image (white to black and v.v.)
         img = cv2.bitwise_not(img)
-        # flatten image to 1D vector / 1D array of length 28*28
+        #normalize values
+        img = img / 255.0
+        # model expects dim=4
         img = img.reshape(1, SIZE, SIZE, 1)
 
         #select most probable number and return
